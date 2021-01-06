@@ -21,6 +21,19 @@ MongoClient.connect('mongodb://localhost:27017')
 
   // send the gamesRouter 'back' for express to use
   app.use('/api/games', gamesRouter);
+
+
+  // YOU CAN NOW CREATE CONNECTIONS ON THE SERVER FOR OTHER ENTITIES TOO. But you 
+  // only want to do it for one connection from express to the database, but for
+  // educational purposes ...
+  // e.g., for /api/users:
+  //
+  // const usersCollection = db.collection("users"); 
+  // const usersRouter = createRouter(usersCollection);
+  // app.use('/api/users', usersRouter);
+  //
+
+
 })
 .catch(console.error);  // catch any errors in making the connection
 
