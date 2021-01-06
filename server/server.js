@@ -1,12 +1,14 @@
 const express = require('express');
 const app = express();
 const parser = require('body-parser');
+const cors = require('cors');
 
 // Connect to the mongodb client
 const MongoClient = require('mongodb').MongoClient; 
 const createRouter = require('./helpers/create_router');
 
-app.use(parser.json());
+app.use(parser.json());  // give express to use
+app.use(cors());    // give express to use
 
 // Make the database connection - this is the port that it 'runs' on.
 MongoClient.connect('mongodb://localhost:27017')
