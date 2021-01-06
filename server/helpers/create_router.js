@@ -4,6 +4,10 @@ const ObjectID = require('mongodb').ObjectID;
 
 const createRouter = function (collection) {
 
+
+  // You can use insomnia to test each of these routes - as you are creating them...
+
+
   const router = express.Router();
 
   // Setup GET router - listen for GET requests on '/'.
@@ -28,6 +32,10 @@ const createRouter = function (collection) {
   // Show route
   // GET /:id
   router.get("/:theId", (req, res) => {
+
+    // res.send("placeholder GET"); // This will show up in Insomnia - if you are using it!
+
+
     const id = req.params.theId;
     
     // You could use other fields and data here too - but it might 
@@ -43,6 +51,9 @@ const createRouter = function (collection) {
   // Create route
   // POST /
   router.post("/", (req, res) => {
+
+    // res.send("placeholder POST"); // This will show up in Insomnia - if you are using it!
+
     // get the body (data) from the request
     const newData = req.body;    
 
@@ -60,6 +71,8 @@ const createRouter = function (collection) {
   // Update route - could use PUT, PATCH, or even POST for this one.
   // PUT /:id
   router.put("/:id", (req, res) => {
+    // res.send("placeholder UPDATE"); // This will show up in Insomnia - if you are using it!
+
     const id = req.params.id;
     const updatedData = req.body;
 
@@ -70,6 +83,7 @@ const createRouter = function (collection) {
                   { $set: updatedData }
     ).then((result) => {    // successful update...
       res.json(result);  // result of the update, including success messages and codes etc
+      // res.send("That's the update done"); - You can send your own custom message
     });
   });
 
@@ -77,7 +91,13 @@ const createRouter = function (collection) {
   // Delete route - could use DELETE or DELETEALL(?). But DELETE is safer!
   // DELETE /:id
   router.delete("/:id", (req, res) => {
-    res.send("placeholder DELETE"); // This will show up in Insomnia - if you are using it!
+    // res.send("placeholder DELETE"); // This will show up in Insomnia - if you are using it!
+
+    const id = req.params.id;
+    collection.deleteOne({ _id: ObjectID(id) })
+    .then((result) => {
+      return res.json(result);
+    });
   });
 
 
