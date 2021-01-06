@@ -1,5 +1,6 @@
 const express = require('express');
-const { ReplSet } = require('mongodb');
+const ObjectID = require('mongodb').ObjectID;
+// const { ReplSet } = require('mongodb');
 
 const createRouter = function (collection) {
 
@@ -7,7 +8,7 @@ const createRouter = function (collection) {
 
   // Setup GET router - listen for GET requests on '/'.
   // Although there is a 'response' parameter (and nothing coming in
-  // from im), it is there as a ...?
+  // from im), it is there as a ...? Both request and response come from express.js
   router.get("/", (request, response) => {
 
     // find all data in the collection (the documents), convert 
@@ -26,21 +27,30 @@ const createRouter = function (collection) {
 
   // Show route
   // GET /:id
-  router.get("/:id", (req, res) => {
-    res.send("Placeholder!");
+  router.get("/:theId", (req, res) => {
+    const id = req.params.theId;
+    
+    collection.findOne({ _id: ObjectID(theId) });  // You could use other fields and data here too - but might (try to?) return mulitple records, or the first one it comes across - might not be the one you are look for.
   });
 
 
   // Create route
   // POST /
   router.post("/", (req, res) => {
-    res.send("placeholder post response");
+    res.send("placeholder POST/create response");
   })
 
-  // Update route - could use PUT, PATCH, or even POST
+  // Update route - could use PUT, PATCH, or even POST for this one.
   // PUT /:id
   router.put("/:id", (req, res) => {
-    res.send("placeholder for put.")
+    res.send("placeholder for PUT/update.")
+  });
+
+
+  // Delete route - could use DELETE or DELETEALL(?). But DELETE is safer!
+  // DELETE /:id
+  router.delete("/:id", (req, res) => {
+    res.send("placeholder DELETE");
   });
 
 
